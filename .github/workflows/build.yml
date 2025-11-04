@@ -27,12 +27,16 @@ jobs:
 
     strategy:
       matrix:
-        base:
-          - ublue-os/bluefin-dx
-        image:
-          - bluefin-surface
-        release:
-          - 42
+        include:
+          - base: ublue-os/bluefin-dx
+            image: bluefin-surface
+            release: 42
+          - base: ublue-os/ucore-minimal
+            image: minimal
+            release: stable
+          - base: ublue-os/ucore-hci
+            image: server
+            release: [stable, stable-nvidia]
 
     steps:
       - name: Prepare environment
