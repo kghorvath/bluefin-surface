@@ -36,7 +36,7 @@ dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel
 #        https://pkg.surfacelinux.com/fedora/linux-surface.repo
 
 curl --retry 3 -Lo /etc/yum.repos.d/linux-surface.repo \
-	 https://pkg.surfacelinux.com/fedora/linux-surface.repo
+	 https://raw.githubusercontent.com/kghorvath/atomic-spins/refs/heads/main/misc/linux-surface.repo
 
 SURFACE_PACKAGES=(
     iptsd
