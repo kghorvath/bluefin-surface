@@ -32,8 +32,11 @@ dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel
 
 #dnf5 -y install /tmp/akmods/kmods/*kvmfr*.rpm
 
+#curl --retry 3 -Lo /etc/yum.repos.d/linux-surface.repo \
+#        https://pkg.surfacelinux.com/fedora/linux-surface.repo
+
 curl --retry 3 -Lo /etc/yum.repos.d/linux-surface.repo \
-        https://pkg.surfacelinux.com/fedora/linux-surface.repo
+	 https://pkg.surfacelinux.com/fedora/linux-surface.repo
 
 SURFACE_PACKAGES=(
     iptsd
