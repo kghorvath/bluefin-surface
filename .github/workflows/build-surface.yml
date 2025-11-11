@@ -3,6 +3,7 @@ name: Build container image
 
 on:
   pull_request:
+  workflow_dispatch:
   
 env:
   IMAGE_DESC: "Kamin's Atomic Image"
