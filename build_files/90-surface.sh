@@ -15,8 +15,6 @@ AKMODS_TARGZ=$(jq -r '.layers[].digest' </tmp/akmods/manifest.json | cut -d : -f
 tar -xvzf /tmp/akmods/"$AKMODS_TARGZ" -C /tmp/
 mv /tmp/rpms/* /tmp/akmods/
 # NOTE: kernel-rpms should auto-extract into correct location
-cat /etc/dnf/dnf.conf
-cat /etc/yum.repos.d/*
 
 # Install Kernel
 dnf5 --setopt=disable_excludes=* -y install \
@@ -34,6 +32,9 @@ dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel
 
 curl --retry 3 -Lo /etc/yum.repos.d/linux-surface.repo \
         https://pkg.surfacelinux.com/fedora/linux-surface.repo
+
+#Lock linux-surface repo to F42 until it gets updated
+sed -i 's/\$releasever/42/g' /etc/yum.repos.d/linux-surface.repo
 
 SURFACE_PACKAGES=(
     iptsd

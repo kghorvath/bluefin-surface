@@ -31,6 +31,9 @@ jobs:
           - base: ublue-os/bluefin-dx
             image: bluefin-surface
             release: 42
+          - base: ublue-os/bluefin-dx
+            image: bluefin-surface
+            release: 43
           - base: ublue-os/ucore-minimal
             image: minimal
             release: stable
