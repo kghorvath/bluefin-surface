@@ -11,9 +11,9 @@ done
 
 # Fetch Kernel RPMS
 mkdir /tmp/kernel-rpms
-skopeo copy --retry-times 3 docker://ghcr.io/bazzite-org/kernel-bazzite:latest-f"$(rpm -E %fedora)"-x86_64 dir:/tmp/
+skopeo copy --retry-times 3 docker://ghcr.io/bazzite-org/kernel-bazzite:latest-f"$(rpm -E %fedora)"-x86_64 dir:/tmp/kernel-rpms/
 KERNEL_TARGZ=$(jq -r '.layers[].digest' </tmp/kernel-rpms/manifest.json | cut -d : -f 2)
-tar -xvzf /tmp/"$KERNEL_TARGZ" -C /tmp/kernel-rpms/
+tar -xvzf /tmp/kernel-rpms/"$KERNEL_TARGZ" -C /tmp/kernel-rpms/
 
 # Install Kernel
 dnf5 --setopt=disable_excludes=* -y install \
