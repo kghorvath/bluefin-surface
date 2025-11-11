@@ -19,7 +19,9 @@ tar -xvzf /tmp/"$KERNEL_TARGZ" -C /tmp/kernel-rpms/
 dnf5 --setopt=disable_excludes=* -y install \
     /tmp/kernel-rpms/kernel-[0-9]*.rpm \
     /tmp/kernel-rpms/kernel-core-*.rpm \
-    /tmp/kernel-rpms/kernel-modules-*.rpm
+    /tmp/kernel-rpms/kernel-modules-*.rpm > /tmp/dnf_log.txt
+
+cat /tmp/dnf_log.txt
 
 dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 
