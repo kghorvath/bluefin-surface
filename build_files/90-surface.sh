@@ -9,12 +9,11 @@ for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-
     rpm --erase $pkg --nodeps
 done
 
-# Fetch Common AKMODS & Kernel RPMS
-skopeo copy --retry-times 3 docker://ghcr.io/ublue-os/akmods:bazzite-"$(rpm -E %fedora)" dir:/tmp/akmods
-AKMODS_TARGZ=$(jq -r '.layers[].digest' </tmp/akmods/manifest.json | cut -d : -f 2)
-tar -xvzf /tmp/akmods/"$AKMODS_TARGZ" -C /tmp/
-mv /tmp/rpms/* /tmp/akmods/
-# NOTE: kernel-rpms should auto-extract into correct location
+# Fetch Bazzite Kernel
+mkdir /tmp/kernel-rpms
+skopeo copy --retry-times 3 docker://ghcr.io/bazzite-org/kernel-bazzite:latest-f"$(rpm -E %fedora)"-x86_64 dir:/tmp/kernel-rpms/
+KERNEL_TARGZ=$(jq -r '.layers[].digest' </tmp/kernel-rpms/manifest.json | cut -d : -f 2)
+tar -xvzf /tmp/kernel-rpms/"$KERNEL_TARGZ" -C /tmp/kernel-rpms/
 
 # Install Kernel
 dnf5 --setopt=disable_excludes=* -y install \
@@ -26,7 +25,7 @@ dnf5 --setopt=disable_excludes=* -y install \
 #dnf5 -y install \
 #    /tmp/kernel-rpms/kernel-devel-*.rpm
 
-dnf5 versionlock add kernel kernel-devel kernel-devel-matched kernel-core kernel-modules kernel-modules-core kernel-modules-extra
+dnf5 versionlock add kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 
 #dnf5 -y install /tmp/akmods/kmods/*kvmfr*.rpm
 
