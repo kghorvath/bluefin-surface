@@ -1,6 +1,9 @@
 ---
 name: Build container image
 
+on:
+  pull_request:
+  
 env:
   IMAGE_DESC: "Kamin's Atomic Image"
   IMAGE_KEYWORDS: "bootc,ublue,atomic"
