@@ -21,13 +21,7 @@ dnf5 --setopt=disable_excludes=* -y install \
     /tmp/kernel-rpms/kernel-core-*.rpm \
     /tmp/kernel-rpms/kernel-modules-*.rpm
 
-# TODO: Figure out why akmods cache is pulling in akmods/kernel-devel
-#dnf5 -y install \
-#    /tmp/kernel-rpms/kernel-devel-*.rpm
-
 dnf5 versionlock add kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
-
-#dnf5 -y install /tmp/akmods/kmods/*kvmfr*.rpm
 
 curl --retry 3 -Lo /etc/yum.repos.d/linux-surface.repo \
         https://pkg.surfacelinux.com/fedora/linux-surface.repo
@@ -88,8 +82,9 @@ surface_hid
 surface_kbd
 EOF
 
+#Rebuild initramfs
 KERNEL_SUFFIX=""
-
 QUALIFIED_KERNEL="$(rpm -qa | grep -P 'kernel-(|'"$KERNEL_SUFFIX"'-)(\d+\.\d+\.\d+)' | sed -E 's/kernel-(|'"$KERNEL_SUFFIX"'-)//')"
+
 /usr/bin/dracut --no-hostonly --kver "$QUALIFIED_KERNEL" --reproducible -v --add ostree -f "/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
 chmod 0600 "/lib/modules/$QUALIFIED_KERNEL/initramfs.img"
