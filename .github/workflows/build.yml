@@ -31,15 +31,15 @@ jobs:
           - base: ublue-os/bluefin-dx
             image: bluefin-surface
             release: 43
-          - base: ublue-os/ucore-minimal
-            image: minimal
-            release: stable
-          - base: ublue-os/ucore-hci
-            image: server
-            release: stable
-          - base: ublue-os/ucore-hci
-            image: server
-            release: stable-nvidia
+#          - base: ublue-os/ucore-minimal
+#            image: minimal
+#            release: stable
+#          - base: ublue-os/ucore-hci
+#            image: server
+#            release: stable
+#          - base: ublue-os/ucore-hci
+#            image: server
+#            release: stable-nvidia
 
     steps:
       - name: Prepare environment
