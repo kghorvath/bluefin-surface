@@ -10,10 +10,10 @@ for pkg in kernel kernel-core kernel-modules kernel-modules-core kernel-modules-
 done
 
 # Fetch Bazzite Kernel
-skopeo copy --retry-times 3 docker://ghcr.io/ublue-os/akmods:bazzite-"$(rpm -E %fedora)" dir:/tmp/akmods
-AKMODS_TARGZ=$(jq -r '.layers[].digest' </tmp/akmods/manifest.json | cut -d : -f 2)
-tar -xvzf /tmp/akmods/"$AKMODS_TARGZ" -C /tmp/
-mv /tmp/rpms/* /tmp/akmods/
+mkdir /tmp/kernel-rpms
+skopeo copy --retry-times 3 docker://ghcr.io/bazzite-org/kernel-bazzite:latest-f"$(rpm -E %fedora)"-x86_64 dir:/tmp/kernel-rpms/
+KERNEL_TARGZ=$(jq -r '.layers[].digest' </tmp/kernel-rpms/manifest.json | cut -d : -f 2)
+tar -xvzf /tmp/kernel-rpms/"$KERNEL_TARGZ" -C /tmp/kernel-rpms/
 
 # Install Kernel
 dnf5 --setopt=disable_excludes=* -y install \
